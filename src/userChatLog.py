@@ -34,6 +34,15 @@ def main(wf):
                         if n % lineNun == 0:
                             titleArray.append(title[n:n+lineNun])
                     largetext='\n'.join(titleArray)
+                if title == '[表情]' or item['url'].startswith('/var/folders/'):
+                    if not qlurl.endswith('.gif'):
+                        qlurl = qlurl + '.gif'
+                    icon = qlurl
+                elif title == '[图片]':
+                    icon = qlurl
+                if subtitle.startswith("from:"):
+                    subtitles = subtitle.split(" ")
+                    title = subtitles[1] + ': '+ title
                 wf.add_item(title=title, subtitle=subtitle, icon=icon, valid=True, largetext=largetext, quicklookurl=qlurl, copytext=copyText, arg=srvId)
         else:
             wf.add_item(title='找不到联系人…',subtitle='请重新输入')
