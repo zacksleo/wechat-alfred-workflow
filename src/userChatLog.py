@@ -8,6 +8,7 @@ sys.setdefaultencoding('utf-8')
 def main(wf):
     userId = os.getenv('userId')
     baseUrl = os.getenv('baseUrl')
+    myself = os.getenv("myself")
     url = baseUrl + 'chatlog?userId=' + userId + '&count=45'
     try:
         result = web.get(url=url)
@@ -42,6 +43,8 @@ def main(wf):
                     icon = qlurl
                 if subtitle.startswith("from:"):
                     subtitles = subtitle.split(" ")
+                    if myself == userId:
+                        subtitles[1] = "我"
                     title = subtitles[1] + ': '+ title
                 wf.add_item(title=title, subtitle=subtitle, icon=icon, valid=True, largetext=largetext, quicklookurl=qlurl, copytext=copyText, arg=srvId)
         else:
